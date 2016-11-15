@@ -1,0 +1,177 @@
+Sub populate_Budgeting_Purchases()
+
+
+    'Dimensions
+    Dim money As Workbook, budgeting As Workbook
+    Dim company(1 To 40) As String, item(1 To 40) As String, amount(1 To 40) As String
+    Dim count As Integer, count2 As Integer
+    
+    
+    'Sheet Stuff
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    
+    'Getting workbooks
+    'Fill in directory hierarchy
+    Set budgeting = Workbooks.Open("$Directory_Hierarchy\Budgeting.xlsm")
+    Set money = Workbooks.Open("$Directory_Hierarchy\Purchases, Gifts, Loans, Banking, Pay.xlsm")
+    
+    
+    'Setting some indexing variables
+    count = 0
+    count2 = 0
+    
+    
+    'Self purchases
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 23 To 39
+    
+        'Makes sure cell is not empty
+        If Not IsEmpty(money.Worksheets(1).Cells(i, 10).Value) Then
+            count2 = count2 + 1
+            company(count2) = money.Worksheets(1).Cells(i, 10).Value
+            item(count2) = money.Worksheets(1).Cells(i, 11).Value
+            amount(count2) = money.Worksheets(1).Cells(i, 12).Value
+        End If
+    Next
+    
+    
+    'Gift purchases
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 13 To 29
+        
+        'Makes sure cell is not empty
+        If Not IsEmpty(money.Worksheets(2).Cells(i, 4).Value) Then
+        
+            'Checks background colour of cell to see if it is a gift or not
+            If Not money.Worksheets(2).Cells(i, 4).Interior.ColorIndex > 0 Then
+                count2 = count2 + 1
+                company(count2) = money.Worksheets(2).Cells(i, 4).Value
+                item(count2) = money.Worksheets(2).Cells(i, 5).Value
+                amount(count2) = money.Worksheets(2).Cells(i, 7).Value
+            End If
+        End If
+    Next
+    
+    
+    'Paste data onto budgeting sheet
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 25 To 41
+        count = count + 1
+        budgeting.Worksheets(1).Cells(i, 12).Value = company(count)
+        budgeting.Worksheets(1).Cells(i, 13).Value = item(count)
+        budgeting.Worksheets(1).Cells(i, 14).Value = amount(count)
+    Next
+    
+    
+    'Closes money sheet
+    money.Close
+End Sub
+Sub populate_Budgeting_Investments()
+
+    
+    'Dimensions
+    Dim money As Workbook, budgeting As Workbook
+    Dim investment(1 To 20) As String, bank(1 To 20) As String
+    Dim count As Integer, count2 As Integer
+    
+    
+    'Screen stuff
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+        
+        
+    'Getting workbooks
+    'Fill in directory hierarchy
+    Set budgeting = Workbooks.Open("$Directory_Hierarchy\Budgeting.xlsm")
+    Set money = Workbooks.Open("$Directory_Hierarchy\Purchases, Gifts, Loans, Banking, Pay.xlsm")
+    
+    
+    'Some indexing variables
+    count2 = 0
+    count = 0
+    
+    
+    'Checks for investments
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 22 To 31
+    
+        'Sees if bank account is investment
+        If InStr(money.Worksheets(3).Cells(i, 12), "TD Investment") Then
+            count2 = count2 + 1
+            bank(count2) = money.Worksheets(3).Cells(i, 12).Value
+            investment(count2) = money.Worksheets(3).Cells(i, 13).Value
+        End If
+    Next
+    
+    
+    'Pasta data onto budgeting sheet
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 25 To 41
+        count = count + 1
+        budgeting.Worksheets(1).Cells(i, 9).Value = bank(count)
+        budgeting.Worksheets(1).Cells(i, 10).Value = investment(count)
+    Next
+    
+    
+    'Closes money sheet
+    money.Close
+End Sub
+Sub populate_Budgeting_Monthly_Purchases()
+    
+
+    'Dimensions
+    Dim money As Workbook, budgeting As Workbook
+    Dim company(1 To 40) As String, item(1 To 40) As String, amount(1 To 40) As String
+    Dim count As Integer, count2 As Integer
+    
+    
+    'Sheet Stuff
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    
+    'Getting workbooks
+    'Fill in directory hierarchy
+    Set budgeting = Workbooks.Open("$Directory_Hierarchy\Budgeting.xlsm")
+    Set money = Workbooks.Open("$Directory_Hierarchy\Purchases, Gifts, Loans, Banking, Pay.xlsm")
+    
+    
+    'Setting some indexing variables
+    count = 0
+    count2 = 0
+    
+    
+    'Self purchases
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 23 To 39
+    
+        'Makes sure cell is not empty
+        If Not IsEmpty(money.Worksheets(1).Cells(i, 4).Value) Then
+            count2 = count2 + 1
+            company(count2) = money.Worksheets(1).Cells(i, 4).Value
+            item(count2) = money.Worksheets(1).Cells(i, 5).Value
+            amount(count2) = money.Worksheets(1).Cells(i, 6).Value
+        End If
+    Next
+    
+    
+    'Paste data onto budgeting sheet
+    'Change count numbers to match starting row and ending row of sheet section
+    For i = 25 To 41
+        count = count + 1
+        budgeting.Worksheets(1).Cells(i, 5).Value = company(count)
+        budgeting.Worksheets(1).Cells(i, 6).Value = item(count)
+        budgeting.Worksheets(1).Cells(i, 7).Value = amount(count)
+    Next
+    
+    
+    'Closes money sheet
+    money.Close
+End Sub
+Sub call_Budgeting_Subs()
+    populate_Budgeting_Purchases
+    populate_Budgeting_Investments
+    populate_Budgeting_Monthly_Purchases
+End Sub
