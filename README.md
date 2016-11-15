@@ -1,7 +1,7 @@
 # ExcelMoneyManagement
 My macros and spreadsheets for money management
 
-These sheets are designed for personal use only. To use the sheets fill in the marked fields on MoneyMacros.txt and then pasta into a blank Visual Basic file, which can be accessed by performing the following:
+These sheets are designed for personal use only. To use the sheets fill in the marked fields on MoneyMacros.txt and then paste into a blank Visual Basic file, which can be accessed by performing the following:
 --> Developer tab
 --> Visual Basic under Code
 
